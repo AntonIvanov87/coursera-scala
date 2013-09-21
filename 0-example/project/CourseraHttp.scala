@@ -78,11 +78,7 @@ object CourseraHttp {
         ("Failed to read the sources jar archive, size read: "+ sizeRead).failNel
       } else {
         val fileData = encodeBase64(bytes)
-        val surl = submitUrl(submitProject.courseId)
-        println("courseId: " + submitProject.courseId)
-        println("submitUrl: " + surl)
         val baseReq = url(submitUrl(submitProject.courseId))
-        println(baseReq)
         val withArgs = baseReq << Map("assignment_part_sid" -> submitProject.assignmentPartId,
                                       "email_address" -> challenge.email,
                                       "submission" -> fileData,
