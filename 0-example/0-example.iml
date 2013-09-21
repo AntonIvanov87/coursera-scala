@@ -20,7 +20,8 @@
       <sourceFolder url="file://$MODULE_DIR$/src/main/scala" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/test/scala" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/lib_managed" />
-      <excludeFolder url="file://$MODULE_DIR$/project/project" />
+      <excludeFolder url="file://$MODULE_DIR$/project/project/project/target" />
+      <excludeFolder url="file://$MODULE_DIR$/project/project/target" />
       <excludeFolder url="file://$MODULE_DIR$/project/target" />
       <excludeFolder url="file://$MODULE_DIR$/submission" />
       <excludeFolder url="file://$MODULE_DIR$/target" />

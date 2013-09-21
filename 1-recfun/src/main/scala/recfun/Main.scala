@@ -1,5 +1,4 @@
 package recfun
-import common._
 import scala.annotation.tailrec
 
 object Main {
