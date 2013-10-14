@@ -2,18 +2,14 @@ package objsets
 
 import common._
 import TweetReader._
-import java.util.NoSuchElementException
-import scala.NoSuchElementException
 
 /**
  * A class to represent tweets.
  */
 class Tweet(val user: String, val text: String, val retweets: Int) {
-
   override def toString: String =
     "User: " + user + "\n" +
     "Text: " + text + " [" + retweets + "]"
-
 }
 
 /**
@@ -83,6 +79,11 @@ abstract class TweetSet {
    */
   def descendingByRetweet: TweetList
 
+
+  /**
+   * The following methods are already implemented
+   */
+
   /**
    * Returns a new `TweetSet` which contains all elements of this set, and the
    * the new element `tweet` in case it does not already exist in this set.
@@ -107,11 +108,15 @@ abstract class TweetSet {
   def foreach(f: Tweet => Unit): Unit
 }
 
-class Empty extends TweetSet {
+case class Empty() extends TweetSet {
 
   def filter(p: Tweet => Boolean): TweetSet = this
 
   def filterAcc(p: Tweet => Boolean, acc: TweetSet): TweetSet = acc
+
+  /**
+   * The following methods are already implemented
+   */
 
   def contains(tweet: Tweet): Boolean = false
 
@@ -129,7 +134,7 @@ class Empty extends TweetSet {
 
 }
 
-class NonEmpty(elem: Tweet, left: TweetSet, right: TweetSet) extends TweetSet {
+case class NonEmpty(elem: Tweet, left: TweetSet, right: TweetSet) extends TweetSet {
 
   def filter(p: (Tweet) => Boolean): TweetSet = filterAcc(p, new Empty)
 
@@ -137,6 +142,10 @@ class NonEmpty(elem: Tweet, left: TweetSet, right: TweetSet) extends TweetSet {
     val newAcc = if (p(elem)) acc.incl(elem) else acc
     left.filterAcc(p, right.filterAcc(p, newAcc))
   }
+
+  /**
+   * The following methods are already implemented
+   */
 
   def contains(x: Tweet): Boolean =
     if (x.text < elem.text) left.contains(x)
@@ -161,9 +170,25 @@ class NonEmpty(elem: Tweet, left: TweetSet, right: TweetSet) extends TweetSet {
   }
 
   def union(that: TweetSet): TweetSet = {
-    var temp: TweetSet = this
-    that.foreach((t: Tweet) => temp = temp incl t)
-    temp
+
+    def unionAcc(rest: TweetSet, acc: TweetSet): TweetSet = {
+
+      rest match {
+        case Empty() => acc
+        case NonEmpty(elem, left, right) => {
+          val accWithElem = acc incl elem
+          val accWithLeft = accWithElem union left
+          accWithLeft union right
+        }
+      }
+
+    }
+
+    unionAcc(that, this)
+
+    //var temp: TweetSet = this
+    //that.foreach((t: Tweet) => temp = temp incl t)
+    //temp
   }
 
   def mostRetweeted: Tweet = {
