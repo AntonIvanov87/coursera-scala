@@ -162,7 +162,7 @@ object Huffman {
    *  - start by defining the parameter types such that the above example invocation
    *    is valid. The parameter types of `until` should match the argument types of
    *    the example invocation. Also define the return type of the `until` function.
-   *  - try to find sensible parameter names for `enough`, `reduce` and `list`.
+   *  - try to find sensible parameter names for `xxx`, `yyy` and `zzz`.
    */
   @tailrec
   def until(enough: List[CodeTree] => Boolean, reduce: List[CodeTree] => List[CodeTree])(list: List[CodeTree]): CodeTree = {
@@ -286,7 +286,6 @@ object Huffman {
       table.head._2
     else
       codeBits(table.tail)(char)
-
 
   /**
    * Given a code tree, create a code table which contains, for every character in the
